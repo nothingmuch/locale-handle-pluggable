@@ -7,20 +7,14 @@ use Moose;
 use Moose::Util::TypeConstraints;
 use MooseX::Types::VariantTable::Declare;
 
-#use MooseX::Types::DateTime;
+use MooseX::Types::DateTime qw(DateTime TimeZone);
 
-use DateTime;
-use DateTime::TimeZone;
-use DateTime::Locale;
-
-class_type "DateTime";
-
-variant_method loc => DateTime => "loc_datetime";
+variant_method loc => DateTime() => "loc_datetime";
 
 has time_zone => (
-    isa => "DateTime::TimeZone",
+    isa => TimeZone,
     is  => "rw",
-    #coerce => 1,
+    coerce => 1,
     predicate => "has_time_zone",
 );
 
