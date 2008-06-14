@@ -82,9 +82,51 @@ maketext handles.
 
 =head1 SYNOPSIS
 
-	use Locale::Handle::Pluggable::DateTime;
+    package My::I18N;
+    use Moose;
+
+    extends qw(
+        Locale::Maketext
+        Locale::Handle::Pluggable::DateTime
+        Locale::Handle::Pluggable
+    );
+
+    # and then you can use your maketext handle to localize dates too
+    $handle->loc( DateTime->now ); # localizied to $handle's language
 
 =head1 DESCRIPTION
+
+This package extends the L<Locale::Maketext::Pluggable> with a variant method
+for L<DateTime> objects.
+
+=head1 ATTRIBUTES
+
+=over 4
+
+=item time_zone
+
+If set all L<DateTime> objects being localized will also have their time zone
+set to this value.
+
+This is a L<MooseX::Types::DateTime/DateTime::TimeZone> with coercions enabled.
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item loc
+
+Adds a variant method that goes to C<loc_date> with L<DateTime> from
+L<MooseX::Types::DateTime> as the variant.
+
+=item loc_date
+
+Localize a L<DateTime> object using L<DateTime::Locale> and the handle's
+language.
+
+=back
 
 =cut
 

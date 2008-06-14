@@ -40,8 +40,19 @@ __END__
 
 =head1 NAME
 
-Locale::Handle::Pluggable - L<Moose> role based plugins for
+Locale::Handle::Pluggable - L<MooseX::Types::VariantTable> based plugins for
 L<Locale::Maketext>.
+
+=head1 VERSION
+
+This code B<WILL> change in the future.
+
+Role support is still not available for L<MooseX::Types::VariantTable>, and
+when that will be added (kinda tricky) everything will change from class based
+to role based.
+
+Once that is in this shouldn't involve much more than C<s/extends/with/>, but
+be aware that your code may break.
 
 =head1 SYNOPSIS
 
@@ -57,8 +68,10 @@ L<Locale::Maketext>.
     use Locale::Maketext::Lexicon { ... };
 
 
-    # load some additional roles with variants for the loc() method
-    with qw(
+    # load some additional roles... uh i mean classes with variants for the loc() method
+    extends qw(
+        Locale::Maktext
+    
         Locale::Maketext::Pluggable
         Locale::Maketext::Pluggable::DateTime
         Locale::Maketext::Pluggable::Foo
@@ -90,8 +103,44 @@ L<Locale::Maketext>.
     
 =head1 DESCRIPTION
 
-This class 
+This class extends the L<Locale::Maketext> api to provide a C<loc> method, that
+attempts to be able to localize "anything", where "anything" is defined in the
+various plugin methods loaded.
+
+The dispatch table for the various types is constructed using
+L<MooseX::Types::VariantTable::Declare>, and each plugin can provide additional
+L<Moose::Util::TypeConstraints> based extensions.
+
+=head1 METHODS
+
+=over 4
+
+=item loc $thing, @args
+
+The variant table method.
+
+Has an entry for C<Str>.
+
+=item loc_string $msgid, @args
+
+Calls C<maketext>.
+
+=back
+
+=head1 TODO
+
+This makes a lot more sense as roles, but L<Moose::Meta::Role> is unable to
+support custom role merging of L<MooseX::Types::VariantTable> yet.
+
+=head1 AUTHOR
+
+Yuval Kogman E<lt>nothingmuch@woobling.orgE<gt>
+
+=head1 COPYRIGHT
+
+	Copyright (c) 2008 Infinity Interactive, Yuval Kogman. All rights
+    reserved This program is free software; you can redistribute
+	it and/or modify it under the same terms as Perl itself.
 
 =cut
-
 
