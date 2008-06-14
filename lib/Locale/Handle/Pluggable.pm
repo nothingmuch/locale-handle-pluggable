@@ -8,7 +8,7 @@ use Carp qw(croak);
 
 #with qw(Locale::Handle::Pluggable::Maketext);
 
-use Moose::Util::TypeConstraints::VariantTable::Sugar;
+use MooseX::Types::VariantTable::Declare;
 
 our $VERSION = "0.01";
 

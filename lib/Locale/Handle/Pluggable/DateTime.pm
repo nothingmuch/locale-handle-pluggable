@@ -5,7 +5,7 @@ package Locale::Handle::Pluggable::DateTime;
 use Moose;
 
 use Moose::Util::TypeConstraints;
-use Moose::Util::TypeConstraints::VariantTable::Sugar;
+use MooseX::Types::VariantTable::Declare;
 
 #use MooseX::Types::DateTime;
 
